@@ -1,4 +1,4 @@
-baseURL = "https://nagarajrs.github.io/"
+baseURL = "https://nagarajrs.github.io/blog/"
 languageCode = "en-us"
 title = "Nagaraj's Blog"
 theme = "PaperMod"
@@ -7,7 +7,7 @@ enableRobotsTXT = true
 
 [params]
   author = "Nagaraj"
-  description = "Thoughts on HPC, Lifescience, and AI."
+  description = "HPC & Cloud Infrastructure | Life Sciences & Pharma | AI/ML at Scale"
   defaultTheme = "auto"        # auto | light | dark
   ShowReadingTime = true
   ShowPostNavLinks = true
@@ -19,11 +19,15 @@ enableRobotsTXT = true
 
   [params.homeInfoParams]
     Title = "Hi, I'm Nagaraj"
-    Content = "Welcome to my blog — I write about HPC and AI for Lifescience and Pharma category."
+    Content = "Senior HPC & Cloud Infrastructure Engineer with 6+ years building scientific computing platforms for global pharma R&D. I write about HPC, AI/ML infrastructure, and the engineering behind life sciences computing at scale."
 
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/nagarajrs"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/nagaraj-s-54273a1a3/"
 
 [markup]
   [markup.highlight]
