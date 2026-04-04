@@ -1,0 +1,31 @@
+/* Slightly larger base font for readability */
+body {
+  font-size: 17px;
+}
+
+/* Constrain post body line length for comfortable reading */
+.post-content {
+  max-width: 680px;
+}
+
+/* Code blocks: monospace font stack */
+code, pre {
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: 0.88em;
+}
+
+/* Subtle table styling */
+.post-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.post-content th,
+.post-content td {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.post-content th {
+  background: var(--code-bg);
+}

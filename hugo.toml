@@ -1,0 +1,55 @@
+baseURL = "https://nagarajrs.github.io/"
+languageCode = "en-us"
+title = "Nagaraj's Blog"
+theme = "PaperMod"
+paginate = 10
+enableRobotsTXT = true
+
+[params]
+  author = "Nagaraj"
+  description = "Thoughts on HPC, Lifescience, and AI."
+  defaultTheme = "auto"        # auto | light | dark
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = false
+  ShowRssButtonInSectionTermList = true
+  comments = false
+
+  [params.homeInfoParams]
+    Title = "Hi, I'm Nagaraj"
+    Content = "Welcome to my blog — I write about HPC and AI for Lifescience and Pharma category."
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/nagarajrs"
+
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = false
+    noClasses = false
+    guessSyntax = true
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 3
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
