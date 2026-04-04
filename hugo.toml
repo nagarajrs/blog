@@ -17,10 +17,6 @@ enableRobotsTXT = true
   ShowRssButtonInSectionTermList = true
   comments = false
 
-  [params.homeInfoParams]
-    Title = "Hi, I'm Nagaraj"
-    Content = "Senior HPC & Cloud Infrastructure Engineer with 6+ years building scientific computing platforms for global pharma R&D. I write about HPC, AI/ML infrastructure, and the engineering behind life sciences computing at scale."
-
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/nagarajrs"
