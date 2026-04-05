@@ -7,9 +7,9 @@ categories: ["Engineering"]
 description: "Lessons from loading my first transformer model — what went wrong, why it went wrong, and how I fixed it."
 showToc: true
 cover:
-  image: "/images/gpu-cpu-cover.png"
+  image: "images/gpu-cpu-cover.png"
   alt: "Intel CPU and NVIDIA GPU chips side by side"
-  relative: false
+  relative: true
 ---
 
 *A practical guide to getting your AI model off the CPU and onto your GPU.*
