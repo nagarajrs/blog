@@ -2,7 +2,7 @@
 title: "torchrun Rendezvous Timeout on SLURM? You're Missing srun"
 date: 2026-04-05
 draft: false
-tags: ["slurm", "pytorch", "distributed-training", "hpc", "fine-tuning"]
+tags: ["slurm", "torchrun", "distributed-training", "hpc", "fine-tuning"]
 categories: ["Engineering"]
 description: "Why torchrun rendezvous times out on multi-node SLURM jobs, what srun actually does, and the sbatch script that finally works."
 showToc: true
