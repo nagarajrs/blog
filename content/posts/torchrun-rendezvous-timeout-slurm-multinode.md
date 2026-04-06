@@ -12,7 +12,23 @@ cover:
   relative: true
 ---
 
-We were fine-tuning [Protenix](https://github.com/bytedance/protenix) across multiple nodes on a SLURM cluster. The sbatch script looked reasonable — nodes, GPUs, torchrun all wired up. We submitted the job and waited. Then the timeout hit:
+## What Is Protenix and Who Uses It?
+
+Proteins are the molecular machines of life — enzymes that catalyze reactions, receptors that relay signals, antibodies that neutralize threats. Understanding how a protein folds into its 3D structure from a flat sequence of amino acids is one of the foundational problems in biology, and solving it unlocks drug discovery, vaccine design, and disease research at a scale previously impossible.
+
+[Protenix](https://github.com/bytedance/protenix) is ByteDance's open-source reimplementation of AlphaFold3, the state-of-the-art deep learning model for predicting protein structures. It goes beyond proteins — it models the interactions between proteins, DNA, RNA, ligands, and ions, which is exactly what matters when you are trying to understand how a drug molecule binds to its target.
+
+In pharma and life sciences, Protenix is used by:
+- **Computational biologists** running structure predictions at scale to prioritize drug targets
+- **Structural biologists** validating predicted binding poses against experimental data
+- **Drug discovery teams** screening thousands of protein-ligand complexes to identify candidates worth synthesizing
+- **Senior scientists** fine-tuning the model on proprietary datasets — organism-specific proteins, rare disease targets, or in-house experimental structures — to get predictions tailored to their pipeline
+
+Fine-tuning Protenix on custom data is where the infrastructure challenge begins. The model is large, the datasets are specialized, and getting it to train efficiently across multiple GPU nodes is non-trivial. This is a story about one of those non-trivial moments.
+
+---
+
+We were fine-tuning Protenix across multiple nodes on a SLURM cluster. The sbatch script looked reasonable — nodes, GPUs, torchrun all wired up. We submitted the job and waited. Then the timeout hit:
 
 ```
 RuntimeError: Timed out waiting for rendezvous to be initialized.
@@ -21,6 +37,7 @@ RuntimeError: Timed out waiting for rendezvous to be initialized.
 No useful stack trace. No indication of which node failed. Just silence, then death. Here is what was actually wrong, why it happens, and the exact fix.
 
 <!--more-->
+
 
 ## The Broken Script
 
