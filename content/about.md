@@ -20,7 +20,7 @@ The scale I work at:
 - **10,000+ CPU/GPU cores** and **20 petabytes** of storage in production
 - **20+ HPC clusters** managed across diverse pharma research environments
 - **100+ scientific users** across Oncology, Virology, PK/PD, and Molecular Profiling groups
-- Co-founded and scaled a scientific cloud computing practice from **3 to 80+ engineers**, generating **$3.5M in annual revenue**
+- Scientific cloud computing practice from **3 to 80+ engineers**.
 - Delivered **$700K (2024)** and **$550K (2025)** in AWS HPC cost savings through right-sizing, spot strategies, and storage optimization
 
 My work covers the full lifecycle: architecture and design, deployment automation, performance tuning, observability, GxP compliance, and direct engagement with scientific teams to align infrastructure with research needs.
