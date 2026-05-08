@@ -6,6 +6,10 @@ tags: ["slurm", "hpc", "linux", "ubuntu", "cluster"]
 categories: ["Engineering"]
 description: "Step-by-step guide to setting up a two-node Slurm cluster (head node + compute node) on Ubuntu 24.04, covering MUNGE, slurmdbd, MariaDB, and job submission."
 showToc: true
+cover:
+  image: "images/slurm-ubuntu-cover.png"
+  alt: "Slurm cluster setup on Ubuntu 24.04 — compute nodes and controller diagram"
+  relative: true
 ---
 
 ## Table of Contents
