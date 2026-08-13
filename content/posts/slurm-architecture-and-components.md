@@ -7,7 +7,7 @@ categories: ["Engineering"]
 description: "A tour of Slurm's internals: slurmctld, slurmd, the Node/Partition/Job managers, MUNGE, and how they cooperate to schedule and run a job."
 showToc: true
 cover:
-  image: "images/slurm-architecture-control-flow.svg"
+  image: "images/Slurm_Architecture_Cover_Image.png"
   alt: "Slurm control flow: client commands, slurmctld primary/backup, and slurmd compute daemons"
   relative: true
 ---

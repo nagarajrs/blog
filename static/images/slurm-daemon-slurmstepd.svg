@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="'Space Grotesk','Segoe UI',sans-serif">
+  <defs>
+    <marker id="ssArrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4c8a5e"/>
+    </marker>
+    <marker id="ssArrowTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a9a9a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="380" fill="#0a0a0a"/>
+  <rect x="1" y="1" width="898" height="378" rx="16" fill="none" stroke="#1e1e1e"/>
+
+  <!-- slurmd -->
+  <rect x="50" y="150" width="170" height="60" rx="10" fill="#0f1a12" stroke="#4c8a5e" stroke-width="2"/>
+  <text x="135" y="186" fill="#f0f0f0" font-size="16" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono',monospace">slurmd</text>
+
+  <path d="M220,180 L330,180" fill="none" stroke="#4c8a5e" stroke-width="1.8" marker-end="url(#ssArrowGreen)"/>
+  <text x="275" y="165" fill="#888888" font-size="11" text-anchor="middle">forks per step</text>
+
+  <!-- slurmstepd -->
+  <rect x="330" y="150" width="190" height="60" rx="10" fill="#0e1616" stroke="#4a9a9a" stroke-width="1.8" stroke-dasharray="6,5"/>
+  <text x="425" y="186" fill="#f0f0f0" font-size="16" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono',monospace">slurmstepd</text>
+
+  <!-- fan out to responsibilities -->
+  <g stroke="#4a9a9a" stroke-width="1.4" fill="none" stroke-dasharray="4,4" marker-end="url(#ssArrowTeal)">
+    <path d="M520,165 L650,90"/>
+    <path d="M520,180 L650,180"/>
+    <path d="M520,195 L650,270"/>
+  </g>
+
+  <g font-size="13" fill="#f0f0f0" text-anchor="start">
+    <rect x="650" y="65" width="210" height="50" rx="8" fill="#141414" stroke="#282828"/>
+    <text x="668" y="87">stdin / stdout / stderr</text>
+    <text x="668" y="104" fill="#888888" font-size="11">streamed to the client</text>
+
+    <rect x="650" y="155" width="210" height="50" rx="8" fill="#141414" stroke="#282828"/>
+    <text x="668" y="177">per-task accounting</text>
+    <text x="668" y="194" fill="#888888" font-size="11">feeds slurmdbd via slurmctld</text>
+
+    <rect x="650" y="245" width="210" height="50" rx="8" fill="#141414" stroke="#282828"/>
+    <text x="668" y="267">signal delivery</text>
+    <text x="668" y="284" fill="#888888" font-size="11">scancel, timeouts, preemption</text>
+  </g>
+
+  <text x="425" y="330" fill="#666666" font-size="12" text-anchor="middle">exits the moment the job step ends; nobody starts it manually</text>
+</svg>
