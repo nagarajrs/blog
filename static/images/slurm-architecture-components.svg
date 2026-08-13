@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 680" font-family="'Space Grotesk','Segoe UI',sans-serif">
+  <defs>
+    <marker id="cpArrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e8961e"/>
+    </marker>
+    <marker id="cpArrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4c8a5e"/>
+    </marker>
+    <marker id="cpArrowDim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a86810"/>
+    </marker>
+    <marker id="cpArrowMuted" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1080" height="680" fill="#0a0a0a"/>
+  <rect x="1" y="1" width="1078" height="678" rx="16" fill="none" stroke="#1e1e1e"/>
+
+  <!-- optional Globus / metascheduler -->
+  <rect x="40" y="40" width="260" height="72" rx="10" fill="#111111" stroke="#a86810" stroke-width="1.6" stroke-dasharray="6,5"/>
+  <text x="170" y="68" fill="#f0f0f0" font-size="13" font-weight="600" text-anchor="middle">Globus and/or</text>
+  <text x="170" y="88" fill="#888888" font-size="12" text-anchor="middle">Metascheduler (optional)</text>
+
+  <!-- user icon top right -->
+  <g stroke="#888888" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <circle cx="1002" cy="52" r="11" fill="#0a0a0a"/>
+    <path d="M1002,63 L1002,90 M986,74 L1018,74 M1002,90 L988,112 M1002,90 L1016,112"/>
+  </g>
+  <text x="935" y="118" fill="#f0f0f0" font-size="13" font-weight="600" text-anchor="end">User: srun</text>
+
+  <!-- job submit line: user -> Job Manager -->
+  <path d="M1000,113 L1000,150 L735,150 L735,210" fill="none" stroke="#e8961e" stroke-width="1.8" marker-end="url(#cpArrowAmber)"/>
+
+  <!-- Globus dashed lines -->
+  <g stroke="#a86810" stroke-width="1.4" stroke-dasharray="5,4" fill="none" marker-end="url(#cpArrowDim)">
+    <path d="M230,112 L525,112 L525,210"/>
+    <path d="M280,112 L695,112 L695,210"/>
+  </g>
+
+  <!-- slurmctld panel -->
+  <rect x="200" y="160" width="680" height="140" rx="14" fill="#131313" stroke="#3a3a5c" stroke-width="1.5"/>
+  <text x="222" y="185" fill="#8e8ecb" font-size="14" font-weight="700" font-family="'JetBrains Mono',monospace">slurmctld</text>
+
+  <g font-size="14" fill="#f0f0f0" text-anchor="middle">
+    <rect x="230" y="210" width="170" height="60" rx="8" fill="#181828" stroke="#4a4a78"/>
+    <text x="315" y="245">Node Manager</text>
+
+    <rect x="440" y="210" width="170" height="60" rx="8" fill="#181828" stroke="#4a4a78"/>
+    <text x="525" y="245">Partition Manager</text>
+
+    <rect x="650" y="210" width="170" height="60" rx="8" fill="#221a0e" stroke="#e8961e" stroke-width="1.5"/>
+    <text x="735" y="245">Job Manager</text>
+  </g>
+
+  <!-- horizontal links inside slurmctld -->
+  <g stroke="#6a6a9e" stroke-width="1.6" fill="none" marker-start="url(#cpArrowMuted)" marker-end="url(#cpArrowMuted)">
+    <path d="M400,240 L440,240"/>
+    <path d="M610,240 L650,240"/>
+  </g>
+
+  <!-- slurmd panel -->
+  <rect x="140" y="430" width="800" height="140" rx="14" fill="#131313" stroke="#2f5c3a" stroke-width="1.5"/>
+  <text x="162" y="455" fill="#7fc98f" font-size="14" font-weight="700" font-family="'JetBrains Mono',monospace">slurmd</text>
+
+  <g font-size="13" fill="#f0f0f0" text-anchor="middle">
+    <rect x="160" y="480" width="130" height="60" rx="8" fill="#132015" stroke="#3d6b48"/>
+    <text x="225" y="514">Machine Status</text>
+
+    <rect x="310" y="480" width="130" height="60" rx="8" fill="#132015" stroke="#3d6b48"/>
+    <text x="375" y="514">Job Status</text>
+
+    <rect x="460" y="480" width="130" height="60" rx="8" fill="#132015" stroke="#3d6b48"/>
+    <text x="525" y="514">Job Control</text>
+
+    <rect x="610" y="480" width="150" height="60" rx="8" fill="#132015" stroke="#3d6b48"/>
+    <text x="685" y="514">Remote Execution</text>
+
+    <rect x="800" y="480" width="130" height="60" rx="8" fill="#132015" stroke="#3d6b48"/>
+    <text x="865" y="514">Stream Copy</text>
+  </g>
+
+  <!-- vertical: Node Manager <-> Machine Status -->
+  <path d="M315,270 L225,480" fill="none" stroke="#4c8a5e" stroke-width="1.6" marker-start="url(#cpArrowGreen)" marker-end="url(#cpArrowGreen)"/>
+
+  <!-- Job Manager fan-out to Job Status / Job Control / Remote Execution -->
+  <g stroke="#e8961e" stroke-width="1.6" fill="none" marker-start="url(#cpArrowAmber)" marker-end="url(#cpArrowAmber)">
+    <path d="M715,270 L375,480"/>
+    <path d="M735,270 L525,480"/>
+    <path d="M755,270 L685,480"/>
+  </g>
+
+  <!-- Remote Execution <-> Stream Copy -->
+  <path d="M760,510 L800,510" fill="none" stroke="#7fc98f" stroke-width="1.8" marker-start="url(#cpArrowGreen)" marker-end="url(#cpArrowGreen)"/>
+
+  <!-- Stream Copy -> User (output path) -->
+  <path d="M880,480 L880,150 L1000,150" fill="none" stroke="#888888" stroke-width="1.6" stroke-dasharray="3,4" marker-end="url(#cpArrowMuted)"/>
+  <text x="885" y="145" fill="#666666" font-size="11">stdout / stderr</text>
+</svg>

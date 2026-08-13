@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620" font-family="'Space Grotesk','Segoe UI',sans-serif">
+  <defs>
+    <marker id="cfArrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e8961e"/>
+    </marker>
+    <marker id="cfArrowDim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a86810"/>
+    </marker>
+    <marker id="cfArrowMuted" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0" y="0" width="1080" height="620" fill="#0a0a0a"/>
+  <rect x="1" y="1" width="1078" height="618" rx="16" fill="none" stroke="#1e1e1e"/>
+
+  <!-- user icon -->
+  <g stroke="#888888" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <circle cx="78" cy="46" r="11" fill="#0a0a0a"/>
+    <path d="M78,57 L78,88 M60,68 L96,68 M78,88 L62,112 M78,88 L94,112"/>
+  </g>
+  <text x="100" y="52" fill="#f0f0f0" font-size="14" font-weight="600">User</text>
+  <text x="100" y="70" fill="#f0f0f0" font-size="14" font-weight="600">Commands</text>
+
+  <!-- left column: client commands -->
+  <g font-family="'JetBrains Mono',monospace" font-size="14" fill="#f0f0f0" text-anchor="middle">
+    <rect x="30" y="118" width="180" height="44" rx="22" fill="#141414" stroke="#3a3a5c"/>
+    <text x="120" y="145">scontrol</text>
+
+    <rect x="30" y="208" width="180" height="44" rx="22" fill="#141414" stroke="#3a3a5c"/>
+    <text x="120" y="235">sinfo</text>
+
+    <rect x="30" y="298" width="180" height="44" rx="22" fill="#141414" stroke="#3a3a5c"/>
+    <text x="120" y="325">squeue</text>
+
+    <rect x="30" y="388" width="180" height="44" rx="22" fill="#141414" stroke="#3a3a5c"/>
+    <text x="120" y="415">scancel</text>
+
+    <rect x="30" y="478" width="180" height="44" rx="22" fill="#141414" stroke="#e8961e" stroke-width="1.5"/>
+    <text x="120" y="505">srun / sbatch</text>
+  </g>
+
+  <!-- connectors: commands -> primary controller -->
+  <g stroke="#5a5a8a" stroke-width="1.6" fill="none" marker-start="url(#cfArrowMuted)" marker-end="url(#cfArrowMuted)">
+    <path d="M210,140 L330,140 L330,295 L430,295"/>
+    <path d="M210,230 L350,230 L350,295 L430,295"/>
+    <path d="M210,320 L430,320"/>
+    <path d="M210,410 L350,410 L350,320 L430,320"/>
+  </g>
+  <g stroke="#e8961e" stroke-width="1.8" fill="none" marker-start="url(#cfArrowAmber)" marker-end="url(#cfArrowAmber)">
+    <path d="M210,500 L370,500 L370,320 L430,320"/>
+  </g>
+
+  <!-- backup controller (dashed) -->
+  <rect x="430" y="70" width="230" height="70" rx="10" fill="#111111" stroke="#a86810" stroke-width="1.6" stroke-dasharray="6,5"/>
+  <text x="545" y="98" fill="#f0f0f0" font-size="15" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono',monospace">slurmctld</text>
+  <text x="545" y="118" fill="#888888" font-size="12" text-anchor="middle">(backup)</text>
+
+  <!-- primary controller -->
+  <rect x="430" y="250" width="230" height="90" rx="10" fill="#171207" stroke="#e8961e" stroke-width="2"/>
+  <text x="545" y="285" fill="#f0f0f0" font-size="17" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono',monospace">slurmctld</text>
+  <text x="545" y="308" fill="#e8961e" font-size="12" font-weight="600" text-anchor="middle">(primary)</text>
+
+  <!-- failover link -->
+  <line x1="545" y1="140" x2="545" y2="250" stroke="#a86810" stroke-width="2" stroke-dasharray="6,5" marker-start="url(#cfArrowDim)" marker-end="url(#cfArrowDim)"/>
+  <text x="562" y="200" fill="#888888" font-size="11">failover</text>
+
+  <text x="700" y="105" fill="#888888" font-size="11" letter-spacing="1.5">CONTROLLER</text>
+  <text x="700" y="120" fill="#888888" font-size="11" letter-spacing="1.5">DAEMONS</text>
+
+  <!-- compute node daemons -->
+  <g font-family="'JetBrains Mono',monospace" font-size="14" fill="#f0f0f0" text-anchor="middle">
+    <rect x="740" y="440" width="110" height="56" rx="8" fill="#141414" stroke="#2f5c3a"/>
+    <text x="795" y="472">slurmd</text>
+
+    <rect x="880" y="440" width="110" height="56" rx="8" fill="#141414" stroke="#2f5c3a"/>
+    <text x="935" y="472">slurmd</text>
+
+    <text x="1022" y="475" fill="#666666" font-size="20" font-family="'Space Grotesk',sans-serif">···</text>
+  </g>
+
+  <text x="740" y="418" fill="#888888" font-size="11" letter-spacing="1.5">COMPUTE NODE DAEMONS</text>
+
+  <!-- primary controller -> compute nodes -->
+  <g stroke="#4c8a5e" stroke-width="1.8" fill="none" marker-start="url(#cfArrowAmber)" marker-end="url(#cfArrowAmber)">
+    <path d="M660,300 L700,300 L700,468 L740,468"/>
+    <path d="M660,320 L680,320 L680,405 L935,405 L935,440"/>
+  </g>
+
+  <!-- stream back to user -->
+  <path d="M795,496 C795,570 260,590 210,505" fill="none" stroke="#888888" stroke-width="1.5" stroke-dasharray="3,4" marker-end="url(#cfArrowMuted)"/>
+  <text x="420" y="585" fill="#666666" font-size="11" text-anchor="middle">job stdout / stderr stream</text>
+</svg>
