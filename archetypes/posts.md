@@ -13,7 +13,7 @@ cover:
   hidden: false
 ---
 
-Opening paragraph — this appears as the card summary on the home page.
+Opening paragraph: this appears as the card summary on the home page.
 
 <!--more-->
 

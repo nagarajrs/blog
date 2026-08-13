@@ -5,9 +5,9 @@ draft: false
 showToc: true
 ---
 
-I'm **Nagaraj Rajangam Selvaraj** — a Senior HPC & Cloud Infrastructure Engineer with 6+ years of experience designing and operating scientific computing platforms for global pharmaceutical and life sciences companies.
+I'm **Nagaraj Rajangam Selvaraj**, a Senior HPC & Cloud Infrastructure Engineer with 6+ years of experience designing and operating scientific computing platforms for global pharmaceutical and life sciences companies.
 
-My background is biomedical engineering, which means I've always worked at the intersection of biology and computation. Today that translates into building the infrastructure that lets scientists run drug simulations, protein folding predictions, and genomics pipelines at scale — without worrying about the compute.
+My background is biomedical engineering, which means I've always worked at the intersection of biology and computation. Today that translates into building the infrastructure that lets scientists run drug simulations, protein folding predictions, and genomics pipelines at scale, without worrying about the compute.
 
 ---
 
@@ -30,7 +30,7 @@ My work covers the full lifecycle: architecture and design, deployment automatio
 ## Technical Focus
 
 **HPC Systems**
-SLURM, LSF, MPI, CUDA, OpenMPI, InfiniBand — from building clusters from scratch (RPM, source, package manager) to tuning GPU-accelerated workloads for GROMACS, Schrödinger, CryoSPARC, and AlphaFold.
+SLURM, LSF, MPI, CUDA, OpenMPI, InfiniBand: from building clusters from scratch (RPM, source, package manager) to tuning GPU-accelerated workloads for GROMACS, Schrödinger, CryoSPARC, and AlphaFold.
 
 **Cloud & Automation**
 AWS (EC2, ParallelCluster, PCS, Batch, FSx, EFS, Lambda, EKS) · Azure · Terraform · Ansible · Kubernetes · Docker · Singularity · GitHub Actions · Jenkins
@@ -45,9 +45,9 @@ Grafana · Prometheus · CloudWatch · Splunk · New Relic · PowerBI dashboards
 
 ## This Blog
 
-I write about the engineering problems that come up when scientific research meets production infrastructure — HPC architecture decisions, cloud cost tradeoffs, AI/ML workload deployment in pharma, and the operational patterns that make large compute clusters reliable.
+I write about the engineering problems that come up when scientific research meets production infrastructure: HPC architecture decisions, cloud cost tradeoffs, AI/ML workload deployment in pharma, and the operational patterns that make large compute clusters reliable.
 
-If you work in life sciences computing, bioinformatics infrastructure, or cloud HPC — this is written for you.
+If you work in life sciences computing, bioinformatics infrastructure, or cloud HPC, this is written for you.
 
 ---
 
@@ -75,7 +75,7 @@ If you work in life sciences computing, bioinformatics infrastructure, or cloud 
 
 ## Education
 
-**B.Tech — Biomedical Engineering**  
+**B.Tech in Biomedical Engineering**  
 Sathyabama University, 2019
 
 ---

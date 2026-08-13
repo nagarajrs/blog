@@ -4,7 +4,7 @@ date: 2026-04-03
 draft: true
 tags: ["HPC", "AWS", "Kubernetes"]          # 2–4 tags shown on home cards
 categories: ["Infrastructure"]              # One broad category
-description: "One sentence that summarises this post — shown in SEO and post lists."
+description: "One sentence that summarises this post: shown in SEO and post lists."
 showToc: true                               # Set false for short posts
 cover:
   image: "images/your-post-cover.png"      # Place file in static/images/
@@ -18,13 +18,13 @@ cover:
   ─────────────────────────────────────────────────────────────────
   1. Copy this file:  copy post-template.md your-post-slug.md
   2. Fill in the frontmatter above (title, date, tags, description, cover)
-  3. Write your post below — the text before <!--more--> is the card summary
+  3. Write your post below: the text before <!--more--> is the card summary
   4. Set draft: false when ready to publish
   5. git add, commit, push → live in ~1 minute
   ─────────────────────────────────────────────────────────────────
 -->
 
-Write your opening paragraph here. Keep it to 2–3 sentences — this text appears
+Write your opening paragraph here. Keep it to 2–3 sentences: this text appears
 as the card preview on the home page and in search results.
 
 <!--more-->
@@ -43,7 +43,7 @@ What environment or scale are we talking about?
 ## The Problem
 
 State the specific issue clearly. What breaks, what's slow, what's missing?
-Use concrete numbers where you have them — cluster size, job count, latency, cost.
+Use concrete numbers where you have them: cluster size, job count, latency, cost.
 
 ---
 
@@ -52,7 +52,7 @@ Use concrete numbers where you have them — cluster size, job count, latency, c
 Explain your solution approach before diving into details.
 A short "here's what we're going to do" paragraph helps readers follow along.
 
-### Step 1 — Set up the environment
+### Step 1: Set up the environment
 
 Walk through the first step. Include actual commands.
 
@@ -61,7 +61,7 @@ Walk through the first step. Include actual commands.
 srun --nodes=4 --ntasks-per-node=8 --gres=gpu:2 my_job.sh
 ```
 
-### Step 2 — Configure X
+### Step 2: Configure X
 
 ```yaml
 # slurm.conf excerpt
@@ -71,7 +71,7 @@ MpiDefault=pmix
 ProctrackType=proctrack/cgroup
 ```
 
-### Step 3 — Run and verify
+### Step 3: Run and verify
 
 ```python
 import subprocess
@@ -107,8 +107,8 @@ What did this achieve? Include before/after metrics if you have them.
 
 ## Further Reading
 
-- [Link text](https://example.com) — one-line description of what this is
-- [AWS ParallelCluster docs](https://docs.aws.amazon.com/parallelcluster/) — official reference
+- [Link text](https://example.com): one-line description of what this is
+- [AWS ParallelCluster docs](https://docs.aws.amazon.com/parallelcluster/): official reference
 - Related post: [Title of a future post](#)
 
 ---
@@ -123,7 +123,7 @@ What did this achieve? Include before/after metrics if you have them.
 
   **bold**   *italic*   `inline code`
 
-  > Blockquote text — use for important callouts or quotes
+  > Blockquote text: use for important callouts or quotes
 
   - Unordered list item
   - Another item

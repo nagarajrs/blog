@@ -387,6 +387,16 @@ pre {
 .toc a { color: var(--text-muted) !important; transition: color 0.15s; }
 .toc a:hover { color: var(--accent) !important; }
 
+/* ---- POST NAV (prev/next) ---- */
+.paginav {
+  background: var(--card-bg);
+  border-color: var(--border-mid);
+}
+.paginav a { color: var(--text-muted); }
+.paginav a:hover { color: var(--accent); background: var(--border); }
+.paginav .title { color: var(--text-faint); }
+.paginav span:not(.title) { color: var(--text) !important; font-weight: 600; }
+
 /* ---- FOOTER ---- */
 footer {
   border-top: 1px solid var(--border) !important;

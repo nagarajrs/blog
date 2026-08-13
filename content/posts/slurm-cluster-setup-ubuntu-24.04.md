@@ -8,7 +8,7 @@ description: "Step-by-step guide to setting up a two-node Slurm cluster (head no
 showToc: true
 cover:
   image: "images/slurm-ubuntu-cover.png"
-  alt: "Slurm cluster setup on Ubuntu 24.04 — compute nodes and controller diagram"
+  alt: "Slurm cluster setup on Ubuntu 24.04: compute nodes and controller diagram"
   relative: true
 ---
 
@@ -16,20 +16,20 @@ cover:
 
 1. [Overview](#overview)
 2. [Prerequisites](#prerequisites)
-3. [Step 1 — Set Hostnames on Both Nodes](#step-1--set-hostnames-on-both-nodes)
-4. [Step 2 — Configure /etc/hosts on Both Nodes](#step-2--configure-etchosts-on-both-nodes)
-5. [Step 3 — Update and Upgrade Both Nodes](#step-3--update-and-upgrade-both-nodes)
-6. [Step 4 — Install and Configure MUNGE (Both Nodes)](#step-4--install-and-configure-munge-both-nodes)
-7. [Step 5 — Copy the MUNGE Key to the Compute Node](#step-5--copy-the-munge-key-to-the-compute-node)
-8. [Step 6 — Verify MUNGE is Working](#step-6--verify-munge-is-working)
-9. [Step 7 — Install Slurm Controller on Head Node](#step-7--install-slurm-controller-on-head-node)
-10. [Step 8 — Install and Configure MariaDB on Head Node](#step-8--install-and-configure-mariadb-on-head-node)
-11. [Step 9 — Install and Configure slurmdbd on Head Node](#step-9--install-and-configure-slurmdbd-on-head-node)
-12. [Step 10 — Configure slurm.conf on Head Node](#step-10--configure-slurmconf-on-head-node)
-13. [Step 11 — Set Correct File Permissions on Head Node](#step-11--set-correct-file-permissions-on-head-node)
-14. [Step 12 — Start Slurm Services on Head Node](#step-12--start-slurm-services-on-head-node)
-15. [Step 13 — Install and Configure Slurm on Compute Node](#step-13--install-and-configure-slurm-on-compute-node)
-16. [Step 14 — Test the Cluster](#step-14--test-the-cluster)
+3. [Step 1: Set Hostnames on Both Nodes](#step-1-set-hostnames-on-both-nodes)
+4. [Step 2: Configure /etc/hosts on Both Nodes](#step-2-configure-etchosts-on-both-nodes)
+5. [Step 3: Update and Upgrade Both Nodes](#step-3-update-and-upgrade-both-nodes)
+6. [Step 4: Install and Configure MUNGE (Both Nodes)](#step-4-install-and-configure-munge-both-nodes)
+7. [Step 5: Copy the MUNGE Key to the Compute Node](#step-5-copy-the-munge-key-to-the-compute-node)
+8. [Step 6: Verify MUNGE is Working](#step-6-verify-munge-is-working)
+9. [Step 7: Install Slurm Controller on Head Node](#step-7-install-slurm-controller-on-head-node)
+10. [Step 8: Install and Configure MariaDB on Head Node](#step-8-install-and-configure-mariadb-on-head-node)
+11. [Step 9: Install and Configure slurmdbd on Head Node](#step-9-install-and-configure-slurmdbd-on-head-node)
+12. [Step 10: Configure slurm.conf on Head Node](#step-10-configure-slurmconf-on-head-node)
+13. [Step 11: Set Correct File Permissions on Head Node](#step-11-set-correct-file-permissions-on-head-node)
+14. [Step 12: Start Slurm Services on Head Node](#step-12-start-slurm-services-on-head-node)
+15. [Step 13: Install and Configure Slurm on Compute Node](#step-13-install-and-configure-slurm-on-compute-node)
+16. [Step 14: Test the Cluster](#step-14-test-the-cluster)
 17. [Troubleshooting](#troubleshooting)
 
 ---
@@ -43,11 +43,11 @@ A Slurm cluster consists of:
 | **Head Node** (controller) | `headnode` | `slurmctld`, `slurmdbd`, `mariadb`, `munge` |
 | **Compute Node** (worker) | `computenode` | `slurmd`, `munge` |
 
-- **slurmctld** — the main Slurm controller daemon. Schedules and manages jobs.
-- **slurmd** — runs on each compute node. Executes the actual jobs.
-- **slurmdbd** — Slurm's database daemon. Records job accounting history.
-- **MariaDB** — the database backend for slurmdbd.
-- **MUNGE** — a shared secret authentication system. All nodes must have the same MUNGE key to trust each other.
+- **slurmctld**: the main Slurm controller daemon. Schedules and manages jobs.
+- **slurmd**: runs on each compute node. Executes the actual jobs.
+- **slurmdbd**: Slurm's database daemon. Records job accounting history.
+- **MariaDB**: the database backend for slurmdbd.
+- **MUNGE**: a shared secret authentication system. All nodes must have the same MUNGE key to trust each other.
 
 > **Important:** Every command in this guide must be run as `root` unless stated otherwise. You can switch to root with `sudo -i` or prefix commands with `sudo`.
 
@@ -81,7 +81,7 @@ scp -i nagaraj.pem nagaraj.pem ubuntu@computenode:~
 
 ---
 
-## Step 1 — Set Hostnames on Both Nodes
+## Step 1: Set Hostnames on Both Nodes
 
 A hostname is the name your machine uses to identify itself on the network. Setting meaningful hostnames makes it much easier to manage a cluster.
 
@@ -107,7 +107,7 @@ hostname
 
 ---
 
-## Step 2 — Configure /etc/hosts on Both Nodes
+## Step 2: Configure /etc/hosts on Both Nodes
 
 The `/etc/hosts` file is a simple lookup table that maps hostnames to IP addresses. We need both nodes to know each other's IP addresses by name, so Slurm can communicate between them.
 
@@ -140,7 +140,7 @@ If both pings work, your name resolution is configured correctly.
 
 ---
 
-## Step 3 — Update and Upgrade Both Nodes
+## Step 3: Update and Upgrade Both Nodes
 
 Always start with a fully updated system to avoid dependency issues.
 
@@ -159,7 +159,7 @@ reboot
 
 ---
 
-## Step 4 — Install and Configure MUNGE (Both Nodes)
+## Step 4: Install and Configure MUNGE (Both Nodes)
 
 MUNGE is the authentication system that Slurm uses. Every node in your cluster must have MUNGE installed and must share the **exact same secret key** (`munge.key`). If the keys don't match, nodes will refuse to communicate with each other.
 
@@ -185,11 +185,11 @@ You should see `active (running)` in the status output.
 
 ---
 
-## Step 5 — Copy the MUNGE Key to the Compute Node
+## Step 5: Copy the MUNGE Key to the Compute Node
 
 The MUNGE key only needs to be generated once (it was auto-generated on the head node). You must copy it from the head node to the compute node so they share the same key.
 
-### On the Head Node — Copy the Key
+### On the Head Node: Copy the Key
 
 ```bash
 scp -i /home/ubuntu/.ssh/id_rsa /etc/munge/munge.key ubuntu@computenode:~/
@@ -213,7 +213,7 @@ md5sum ~/munge.key
 
 Both checksums must be **identical**. If they differ, copy the key again.
 
-### On the Compute Node — Install the Key
+### On the Compute Node: Install the Key
 
 Now move the key into the correct location and set the proper ownership:
 
@@ -245,7 +245,7 @@ systemctl status munge
 
 ---
 
-## Step 6 — Verify MUNGE is Working
+## Step 6: Verify MUNGE is Working
 
 From the **head node**, test that MUNGE authentication works between both nodes:
 
@@ -265,7 +265,7 @@ If you see `Success`, MUNGE is correctly set up and the two nodes trust each oth
 
 ---
 
-## Step 7 — Install Slurm Controller on Head Node
+## Step 7: Install Slurm Controller on Head Node
 
 The Slurm controller daemon (`slurmctld`) is the brain of the cluster. It accepts job submissions, schedules them, and dispatches them to compute nodes.
 
@@ -275,11 +275,11 @@ Run this **on the head node**:
 apt install slurmctld -y
 ```
 
-> Do **not** start slurmctld yet — we need to configure `slurm.conf` first, which we will do in Step 10.
+> Do **not** start slurmctld yet: we need to configure `slurm.conf` first, which we will do in Step 10.
 
 ---
 
-## Step 8 — Install and Configure MariaDB on Head Node
+## Step 8: Install and Configure MariaDB on Head Node
 
 Slurm uses a database to record job history and accounting information. We use **MariaDB** (a MySQL-compatible database) as the backend.
 
@@ -306,12 +306,12 @@ mariadb-secure-installation
 ```
 
 Follow the prompts:
-- **Switch to unix_socket authentication?** — Press `n` then Enter
-- **Change the root password?** — Press `y`, then set a strong password (e.g., `12345` for a dev cluster — use something stronger in production)
-- **Remove anonymous users?** — Press `y`
-- **Disallow root login remotely?** — Press `y`
-- **Remove test database?** — Press `y`
-- **Reload privilege tables?** — Press `y`
+- **Switch to unix_socket authentication?**: Press `n` then Enter
+- **Change the root password?**: Press `y`, then set a strong password (e.g., `12345` for a dev cluster; use something stronger in production)
+- **Remove anonymous users?**: Press `y`
+- **Disallow root login remotely?**: Press `y`
+- **Remove test database?**: Press `y`
+- **Reload privilege tables?**: Press `y`
 
 ### Create the Slurm Database and User
 
@@ -343,9 +343,9 @@ Enter the password when prompted. If you reach the MariaDB prompt without errors
 
 ---
 
-## Step 9 — Install and Configure slurmdbd on Head Node
+## Step 9: Install and Configure slurmdbd on Head Node
 
-`slurmdbd` is Slurm's database daemon — it sits between Slurm and MariaDB, handling all accounting data.
+`slurmdbd` is Slurm's database daemon: it sits between Slurm and MariaDB, handling all accounting data.
 
 ### Install slurmdbd
 
@@ -378,15 +378,15 @@ SlurmUser=slurm
 ```
 
 Key settings explained:
-- `AuthType=auth/munge` — use MUNGE for authentication (required).
-- `DbdHost=localhost` — slurmdbd runs on the same machine as the database.
-- `StorageLoc=slurm_acct_db` — the name of the database we created.
-- `StorageUser=slurm` — the database user we created.
-- `StoragePass=12345` — the database password (must match what you set in MariaDB).
+- `AuthType=auth/munge`: use MUNGE for authentication (required).
+- `DbdHost=localhost`: slurmdbd runs on the same machine as the database.
+- `StorageLoc=slurm_acct_db`: the name of the database we created.
+- `StorageUser=slurm`: the database user we created.
+- `StoragePass=12345`: the database password (must match what you set in MariaDB).
 
 ---
 
-## Step 10 — Configure slurm.conf on Head Node
+## Step 10: Configure slurm.conf on Head Node
 
 `slurm.conf` is the main configuration file for the entire cluster. It must be **identical on every node** (head node and all compute nodes).
 
@@ -399,7 +399,7 @@ vi /etc/slurm/slurm.conf
 Use the following configuration:
 
 ```ini
-# Cluster name — can be anything you like
+# Cluster name: can be anything you like
 ClusterName=slurm-dev
 
 # The hostname of the machine running slurmctld
@@ -438,11 +438,11 @@ PartitionName=dev Nodes=ALL Default=YES MaxTime=INFINITE State=UP
 ```
 
 Key settings explained:
-- `ClusterName` — a label for your cluster, used in job accounting.
-- `SlurmctldHost=headnode` — tells every node where to find the controller.
-- `AccountingStorageType=accounting_storage/slurmdbd` — enables job accounting via slurmdbd.
-- `NodeName=computenode CPUs=2 State=UNKNOWN` — defines the compute node. Change `CPUs=2` to match your compute node's actual CPU count (check with `nproc` on the compute node).
-- `PartitionName=dev` — defines a job queue called "dev" that includes all nodes.
+- `ClusterName`: a label for your cluster, used in job accounting.
+- `SlurmctldHost=headnode`: tells every node where to find the controller.
+- `AccountingStorageType=accounting_storage/slurmdbd`: enables job accounting via slurmdbd.
+- `NodeName=computenode CPUs=2 State=UNKNOWN`: defines the compute node. Change `CPUs=2` to match your compute node's actual CPU count (check with `nproc` on the compute node).
+- `PartitionName=dev`: defines a job queue called "dev" that includes all nodes.
 
 > **Important:** The `CPUs` value must match the actual number of CPUs on the compute node. Run `nproc` on the compute node to check.
 
@@ -462,7 +462,7 @@ mv /tmp/slurm.conf /etc/slurm/slurm.conf
 
 ---
 
-## Step 11 — Set Correct File Permissions on Head Node
+## Step 11: Set Correct File Permissions on Head Node
 
 Slurm is strict about file ownership. The configuration files must be owned by the `slurm` user and have the right permissions, or the daemons will refuse to start.
 
@@ -471,7 +471,7 @@ Run this **on the head node**:
 ```bash
 cd /etc/slurm
 
-# slurmdbd.conf contains a database password — restrict it to root/slurm only
+# slurmdbd.conf contains a database password: restrict it to root/slurm only
 chmod 600 slurmdbd.conf
 chown slurm:slurm slurmdbd.conf
 
@@ -501,7 +501,7 @@ chown -R slurm:slurm /var/lib/slurm
 
 ---
 
-## Step 12 — Start Slurm Services on Head Node
+## Step 12: Start Slurm Services on Head Node
 
 Now start all three services in the correct order: database first, then accounting daemon, then the controller.
 
@@ -539,11 +539,11 @@ sinfo
 squeue
 ```
 
-`sinfo` will show your partition and nodes. The compute node will likely show as `down` or `unknown` — that is expected until we start `slurmd` on the compute node.
+`sinfo` will show your partition and nodes. The compute node will likely show as `down` or `unknown`; that is expected until we start `slurmd` on the compute node.
 
 ---
 
-## Step 13 — Install and Configure Slurm on Compute Node
+## Step 13: Install and Configure Slurm on Compute Node
 
 Now switch to the **compute node** to install the Slurm worker daemon.
 
@@ -589,7 +589,7 @@ tail -50 /var/log/slurm/slurmd.log
 
 ---
 
-## Step 14 — Test the Cluster
+## Step 14: Test the Cluster
 
 Go back to the **head node** to verify everything is working.
 
@@ -670,7 +670,7 @@ Running on: computenode
 Wed May  7 12:00:00 UTC 2026
 ```
 
-**Congratulations — your Slurm cluster is working!**
+**Congratulations: your Slurm cluster is working!**
 
 ---
 
@@ -695,9 +695,9 @@ tail -100 /var/log/slurm/slurmctld.log
 ```
 
 Common causes:
-- **slurmdbd is not running** — start it first: `systemctl restart slurmdbd`.
-- **Wrong file ownership** — re-run the `chown slurm:slurm` commands from Step 11.
-- **CPUs mismatch** — the `CPUs=` value in `slurm.conf` does not match the compute node. Run `nproc` on the compute node and update `slurm.conf`.
+- **slurmdbd is not running**: start it first: `systemctl restart slurmdbd`.
+- **Wrong file ownership**: re-run the `chown slurm:slurm` commands from Step 11.
+- **CPUs mismatch**: the `CPUs=` value in `slurm.conf` does not match the compute node. Run `nproc` on the compute node and update `slurm.conf`.
 
 ### slurmdbd fails to start
 
@@ -706,9 +706,9 @@ tail -100 /var/log/slurm/slurmdbd.log
 ```
 
 Common causes:
-- **Wrong database password** — check that `StoragePass` in `slurmdbd.conf` matches the password you set in MariaDB.
-- **Database does not exist** — log into MariaDB (`mariadb -u root`) and verify the `slurm_acct_db` database and `slurm` user exist.
-- **File permissions** — `slurmdbd.conf` must be `chmod 600` and owned by `slurm:slurm`.
+- **Wrong database password**: check that `StoragePass` in `slurmdbd.conf` matches the password you set in MariaDB.
+- **Database does not exist**: log into MariaDB (`mariadb -u root`) and verify the `slurm_acct_db` database and `slurm` user exist.
+- **File permissions**: `slurmdbd.conf` must be `chmod 600` and owned by `slurm:slurm`.
 
 ### Compute node shows as `down` in sinfo
 
@@ -731,9 +731,9 @@ scontrol show job <JOB_ID>
 ```
 
 Look for the `Reason` field. Common reasons:
-- `Resources` — nodes are busy or down.
-- `ReqNodeNotAvail` — the requested node is unavailable.
-- `InvalidQOS` — accounting is not fully set up; restart slurmdbd.
+- `Resources`: nodes are busy or down.
+- `ReqNodeNotAvail`: the requested node is unavailable.
+- `InvalidQOS`: accounting is not fully set up; restart slurmdbd.
 
 ### Check all Slurm ports are listening
 

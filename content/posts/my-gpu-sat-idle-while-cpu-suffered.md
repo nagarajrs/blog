@@ -4,7 +4,7 @@ date: 2026-03-29
 draft: false
 tags: ["machine-learning", "pytorch", "cuda", "local-ai", "deep-learning"]
 categories: ["Engineering"]
-description: "Lessons from loading my first transformer model — what went wrong, why it went wrong, and how I fixed it."
+description: "Lessons from loading my first transformer model: what went wrong, why it went wrong, and how I fixed it."
 showToc: true
 cover:
   image: "images/gpu-cpu-cover.png"
@@ -28,13 +28,13 @@ pipeline.to(torch.bfloat16)
 pipeline.to("cuda")
 ```
 
-If you are anything like me, you probably assumed the example code would just work. That is the thing with AI systems — even when something runs without errors, you cannot assume it is running well. Getting a model to load is one milestone. Getting it to load efficiently, on the right hardware, at the right precision — that is an entirely different problem.
+If you are anything like me, you probably assumed the example code would just work. That is the thing with AI systems; even when something runs without errors, you cannot assume it is running well. Getting a model to load is one milestone. Getting it to load efficiently, on the right hardware, at the right precision, is an entirely different problem.
 
 ## Problem #1: PyTorch Said CUDA Was Unavailable
 
-The first thing I noticed was that `torch.cuda.is_available()` was returning `False` — even though my `nvidia-smi` clearly showed CUDA 13.1 support. This confused me at first.
+The first thing I noticed was that `torch.cuda.is_available()` was returning `False`, even though my `nvidia-smi` clearly showed CUDA 13.1 support. This confused me at first.
 
-The reason: there are two completely separate things called "CUDA" here. The version shown in `nvidia-smi` is the maximum CUDA toolkit your driver supports. But PyTorch ships as separate builds — a CPU-only build and CUDA-enabled builds. If you ran a simple `pip install torch` without specifying a source URL, you almost certainly got the CPU-only build.
+The reason: there are two completely separate things called "CUDA" here. The version shown in `nvidia-smi` is the maximum CUDA toolkit your driver supports. But PyTorch ships as separate builds: a CPU-only build and CUDA-enabled builds. If you ran a simple `pip install torch` without specifying a source URL, you almost certainly got the CPU-only build.
 
 The fix was to reinstall PyTorch explicitly with the CUDA 13.0 build:
 
@@ -48,7 +48,7 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 
 After fixing the CUDA issue, I ran the script again. CUDA was now available, but something still felt wrong. The model was taking over 7 minutes to load, GPU utilization was under 3%, and VRAM was barely touched. My monitoring tool showed RAM climbing steadily.
 
-The root cause was in my loading pattern. Calling `.from_pretrained()` without specifying a device loads all model weights into CPU RAM first. Then calling `.to("cuda")` afterwards copies the entire model from RAM to VRAM. For a 9-shard model like Qwen-Image-Edit, this means the model exists twice in memory simultaneously during the transfer — once in RAM, once in VRAM.
+The root cause was in my loading pattern. Calling `.from_pretrained()` without specifying a device loads all model weights into CPU RAM first. Then calling `.to("cuda")` afterwards copies the entire model from RAM to VRAM. For a 9-shard model like Qwen-Image-Edit, this means the model exists twice in memory simultaneously during the transfer: once in RAM, once in VRAM.
 
 > **Key insight:** The model loads shards sequentially into CPU RAM, then the entire thing is copied to VRAM. With 8GB of VRAM, a model that is close to that limit will fail, or cause significant memory pressure on both RAM and VRAM.
 
@@ -68,7 +68,7 @@ pipeline = QwenImageEditPipeline.from_pretrained(
 )
 ```
 
-Two things are happening here. First, `torch_dtype=torch.bfloat16` halves the memory footprint of the model during the load itself rather than converting after the fact. Second, `device_map="cuda"` (powered by `accelerate`) causes each shard to be moved to the GPU immediately after being read from disk — there is never a full in-memory CPU copy.
+Two things are happening here. First, `torch_dtype=torch.bfloat16` halves the memory footprint of the model during the load itself rather than converting after the fact. Second, `device_map="cuda"` (powered by `accelerate`) causes each shard to be moved to the GPU immediately after being read from disk; there is never a full in-memory CPU copy.
 
 If your model is too large for VRAM (which is a real concern at 8GB), swap `device_map="cuda"` for `device_map="auto"`. This tells `accelerate` to fill VRAM first, then spill any overflow into RAM, while still using the GPU for compute. Slower than pure VRAM, but far faster than pure CPU.
 
@@ -76,6 +76,6 @@ If your model is too large for VRAM (which is a real concern at 8GB), swap `devi
 
 ## Three Things Worth Remembering
 
-- Your driver's CUDA version and PyTorch's CUDA support are completely independent — always verify your torch build with `torch.__version__`
-- Never load a model to CPU and then move it to GPU — use `device_map` at load time
-- Install `accelerate` before you need it — it unlocks proper memory management across the entire diffusers ecosystem
+- Your driver's CUDA version and PyTorch's CUDA support are completely independent: always verify your torch build with `torch.__version__`
+- Never load a model to CPU and then move it to GPU: use `device_map` at load time
+- Install `accelerate` before you need it: it unlocks proper memory management across the entire diffusers ecosystem
