@@ -24,8 +24,8 @@ This post is a conceptual companion to the [Slurm architecture]({{< ref "slurm-a
 
 1. [What Hyperthreading Actually Is](#what-hyperthreading-actually-is)
 2. [What SMT Is Good at Filling, and What It Can't Fix](#what-smt-is-good-at-filling-and-what-it-cant-fix)
-3. [Applications That Tend to Benefit from SMT](#applications-that-tend-to-benefit-from-smt)
-4. [Applications That Tend to Do Better with SMT Disabled](#applications-that-tend-to-do-better-with-smt-disabled)
+3. [Programs That Tend to Benefit from Hyperthreading](#programs-that-tend-to-benefit-from-hyperthreading)
+4. [Programs That Tend to Do Better with Hyperthreading Disabled](#programs-that-tend-to-do-better-with-hyperthreading-disabled)
 5. [NUMA and Core Binding](#numa-and-core-binding)
 6. [Controlling SMT in Slurm](#controlling-smt-in-slurm)
 7. [Key Takeaways](#key-takeaways)
@@ -39,9 +39,9 @@ This post is a conceptual companion to the [Slurm architecture]({{< ref "slurm-a
 
 ![Two logical CPUs sharing one physical core's front-end, execution ports, and cache](../../images/hyperthreading-core-diagram.svg)
 
-The reason this is useful at all: a modern out-of-order superscalar core stalls constantly. A cache miss, a branch misprediction, a dependency chain waiting on a previous instruction's result: each of these leaves execution ports sitting idle for cycles at a time, because the one instruction stream running on the core has nothing ready to issue. SMT's whole bet is that a *second* instruction stream, from a second thread, will have work ready to issue during exactly those idle cycles. The hardware interleaves instructions from both threads into the same execution ports, filling gaps that would otherwise go to waste.
+Think of a CPU core as a single chef in a kitchen. The chef is fast, but constantly has to wait: for something to come out of the fridge, for water to boil, for an oven timer to go off. During those waits, the chef's hands are idle even though the kitchen looks busy. Hyperthreading is like handing that one chef two order tickets instead of one. When order A is stuck waiting on something, the chef switches to working on order B instead. The chef isn't cooking twice as fast. There's still one chef, one stove, one set of pots. But less of the chef's time gets wasted standing around waiting.
 
-That framing matters for everything that follows: SMT doesn't add compute capacity. It improves the *utilization* of compute capacity that a single thread wasn't fully using.
+That's the whole idea behind hyperthreading: a CPU core spends a surprising amount of time waiting rather than computing (waiting for data to arrive from memory, waiting to find out which way a decision in the program goes, and so on). Giving the core a second task to work on fills some of that otherwise-wasted waiting time. It doesn't add compute capacity; it just makes better use of the capacity that was already sitting idle.
 
 ---
 
@@ -49,29 +49,33 @@ That framing matters for everything that follows: SMT doesn't add compute capaci
 
 Two threads sharing one core only helps when the first thread is leaving room. Whether it does comes down to what it's actually bottlenecked on:
 
-- **Latency-bound work benefits.** If a thread spends much of its time waiting on memory (a cache miss that takes hundreds of cycles to resolve) rather than saturating execution ports, a second thread can use those otherwise-wasted cycles. This is the case SMT was designed for.
-- **Throughput-bound work doesn't, and can regress.** If a thread already keeps the execution ports, the vector unit, or memory bandwidth close to saturated, there's no idle capacity for a second thread to fill. The second thread doesn't get free cycles: it competes for the same ports, the same L1/L2 cache lines, and the same finite memory bandwidth the first thread was already using efficiently. Net effect: both threads run slower than one thread running alone, because cache residency (the useful data one thread had already pulled into L1/L2) gets evicted to make room for the other thread's data.
+- **A thread that's often waiting benefits.** If a thread spends much of its time waiting on memory rather than actively computing, a second thread can use those otherwise-wasted moments. This is the case hyperthreading was designed for: our chef with a spare moment between tasks.
+- **But if the chef is already at full speed with no waiting, a second order doesn't help.** If a thread already keeps the CPU's compute hardware working non-stop with essentially no idle moments, there's no spare time for a second thread to use. Now the one core has to split its attention between two threads using the same hardware, and both come out slower than if the core had just focused on one. This is the case where hyperthreading backfires: work that was already keeping the hardware fully busy, with no waiting to fill.
 
-This is the same shape as Amdahl's Law, one level down in the stack: SMT's gain is bounded by how much idle time actually exists to fill, and when that idle time is close to zero, adding a second thread can make things net-negative rather than net-neutral.
-
----
-
-## Applications That Tend to Benefit from SMT
-
-- **Irregular memory-access codes.** Graph algorithms, sparse matrix operations, and pointer-chasing workloads spend a lot of time waiting on cache misses that are hard to prefetch around. A second thread has plenty of stalls to fill.
-- **Some genomics and bioinformatics pipelines.** Alignment and search steps with branchy, data-dependent control flow and scattered memory access tend to stall the pipeline in the same way: idle execution ports that a second thread can use.
-- **Mixed job placement on a shared node.** When some of the work on a node is I/O-bound or syscall-heavy (waiting on disk, network, or a subprocess) and some is compute-bound, SMT lets the compute-bound thread make progress during the other thread's waits.
-- **Low-vectorization, high-thread-count workloads.** Code that isn't using wide vector instructions per thread has more headroom in the execution ports to begin with, so a second thread's instructions have somewhere to go.
+In short: the benefit is capped by how much waiting there actually is to fill. When there's plenty of waiting, hyperthreading helps. When there's almost none, it can make things worse rather than just fail to help.
 
 ---
 
-## Applications That Tend to Do Better with SMT Disabled
+## Programs That Tend to Benefit from Hyperthreading
 
-- **Dense, well-vectorized compute kernels.** BLAS/LAPACK-heavy linear algebra, FFT-heavy codes, and CFD or finite-element solvers using AVX2/AVX-512 are written specifically to keep the vector execution units saturated. There's no idle capacity for a second thread to use, only contention for the one thing both threads need.
-- **Tightly-coupled MPI codes.** When many ranks are exchanging data on a predictable cadence, what matters is consistent per-rank throughput and cache residency, not aggregate utilization. A second thread stealing cache lines or execution slots from a rank introduces jitter, and in a bulk-synchronous MPI program, the slowest rank sets the pace for everyone else.
-- **Anything already memory-bandwidth-bound.** If a workload is limited by how fast data can move from memory, not by execution ports or cache, adding a second thread on the same core doesn't add bandwidth: it just adds another consumer competing for the same bandwidth ceiling.
+These are programs that spend a lot of their time waiting rather than crunching numbers non-stop:
 
-The common thread (no pun intended): SMT helps when the bottleneck is *latency* the second thread can hide, and hurts when the bottleneck is a *shared resource* the second thread can only compete for.
+- **Searching and matching large amounts of data.** Some genomics and bioinformatics tools spend much of their time looking things up and jumping around in data rather than doing steady, predictable computation. Those lookups and jumps create the same kind of waiting a second thread can fill.
+- **Several different jobs sharing one machine.** If one job is waiting on disk or network while another is actively computing, hyperthreading lets the computing job make progress during the other job's waits.
+- **Programs that aren't demanding on the CPU's math hardware.** Some workloads don't push the core's number-crunching hardware very hard to begin with, which leaves more room for a second task to slot in.
+
+---
+
+## Programs That Tend to Do Better with Hyperthreading Disabled
+
+These are programs that keep the CPU busy nearly every cycle with heavy, continuous computation, leaving little or no idle time for a second thread to use:
+
+- **NONMEM and similar modeling software are a good real-world example.** Fitting a nonlinear mixed-effects model means repeatedly solving heavy math problems (optimization, differential equations) back to back, with very few natural pauses. There's rarely idle time for a second thread to use, so a second thread only gets in the way: competing for the same math hardware and the same fast memory (cache) the first thread was already using efficiently. That matches what you've likely seen yourself: turning hyperthreading off gives each run uncontested use of the core, and the run finishes faster.
+- **Heavy simulation software** (engineering simulations, fluid dynamics, and similar) tends to behave the same way: continuous, intensive math with little waiting.
+- **Multiple tightly-coordinated processes working together as a team.** This is common in scientific computing, where many processes run in lockstep and exchange results on a schedule. Here, consistency matters more than squeezing out extra utilization: if hyperthreading makes even one process slightly slower or less predictable, it slows down the whole team, since they all have to wait for the slowest one.
+- **Anything limited by how fast data can move in and out of memory,** rather than by the math itself. Adding a second thread doesn't create more of that data pathway; it just adds another user competing for the same limited pathway.
+
+The pattern to remember: hyperthreading helps when a program is often *waiting*, and it hurts when a program is already keeping the hardware *fully busy*.
 
 ---
 
