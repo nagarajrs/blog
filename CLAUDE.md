@@ -24,10 +24,10 @@ hugo new content posts/my-post-title.md
 
 ## Architecture
 
-- **Theme**: PaperMod, installed as a git submodule at `themes/PaperMod/`. Do not edit theme files directly — override via `assets/css/extended/custom.css` or by copying templates into `layouts/`.
+- **Theme**: PaperMod, installed as a git submodule at `themes/PaperMod/`. Do not edit theme files directly; override via `assets/css/extended/custom.css` or by copying templates into `layouts/`.
 - **Config**: All site config in `hugo.toml`. PaperMod-specific params live under `[params]`.
 - **Content**: Markdown files in `content/posts/` (blog posts) and `content/` root (standalone pages like About).
-- **Custom CSS**: `assets/css/extended/custom.css` — PaperMod automatically merges files in this directory.
+- **Custom CSS**: `assets/css/extended/custom.css` (PaperMod automatically merges files in this directory).
 - **Deployment**: GitHub Actions at `.github/workflows/deploy.yml` builds on push to `main` and deploys to GitHub Pages.
 
 ## Writing Posts
@@ -47,11 +47,13 @@ showToc: true         # show table of contents
 
 Use `<!--more-->` to set the summary cutoff for the post list.
 
+Do not use em dashes (—) anywhere in post content. Rewrite with a comma, colon, period, or parentheses instead.
+
 ## Deploying to GitHub Pages
 
 1. Create a GitHub repo (e.g., `nagaraj.github.io` for a user site, or any name for a project site).
 2. Update `baseURL` in `hugo.toml` to match: `https://nagaraj.github.io/` or `https://nagaraj.github.io/repo-name/`.
-3. Push to `main` — the workflow handles the rest.
+3. Push to `main`; the workflow handles the rest.
 4. In repo Settings → Pages → Source, select **GitHub Actions**.
 
 ## Overriding Theme Templates
