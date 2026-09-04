@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" font-family="'Space Grotesk','Segoe UI',sans-serif">
+  <defs>
+    <marker id="htArrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e8961e"/>
+    </marker>
+    <marker id="htArrowMuted" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="htArrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4c8a5e"/>
+    </marker>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0" y="0" width="1080" height="660" fill="#0a0a0a"/>
+  <rect x="1" y="1" width="1078" height="658" rx="16" fill="none" stroke="#1e1e1e"/>
+
+  <text x="30" y="42" fill="#888888" font-size="11" letter-spacing="1.5">TWO LOGICAL CPUS, ONE PHYSICAL CORE</text>
+
+  <!-- Logical CPU 0 -->
+  <g font-family="'JetBrains Mono',monospace" text-anchor="middle">
+    <rect x="90" y="70" width="270" height="52" rx="26" fill="#141414" stroke="#e8961e" stroke-width="1.6"/>
+    <text x="225" y="103" fill="#f0f0f0" font-size="16" font-weight="700">Logical CPU 0</text>
+  </g>
+  <rect x="140" y="146" width="170" height="60" rx="8" fill="#111111" stroke="#3a3a5c" stroke-width="1.6" stroke-dasharray="6,5"/>
+  <text x="225" y="171" fill="#f0f0f0" font-size="12.5" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono',monospace">Architectural</text>
+  <text x="225" y="188" fill="#f0f0f0" font-size="12.5" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono',monospace">State</text>
+  <text x="225" y="234" fill="#888888" font-size="11" text-anchor="middle">registers, program counter</text>
+  <text x="225" y="249" fill="#888888" font-size="11" text-anchor="middle">(duplicated per thread)</text>
+
+  <!-- Logical CPU 1 -->
+  <g font-family="'JetBrains Mono',monospace" text-anchor="middle">
+    <rect x="720" y="70" width="270" height="52" rx="26" fill="#141414" stroke="#e8961e" stroke-width="1.6"/>
+    <text x="855" y="103" fill="#f0f0f0" font-size="16" font-weight="700">Logical CPU 1</text>
+  </g>
+  <rect x="770" y="146" width="170" height="60" rx="8" fill="#111111" stroke="#3a3a5c" stroke-width="1.6" stroke-dasharray="6,5"/>
+  <text x="855" y="171" fill="#f0f0f0" font-size="12.5" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono',monospace">Architectural</text>
+  <text x="855" y="188" fill="#f0f0f0" font-size="12.5" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono',monospace">State</text>
+  <text x="855" y="234" fill="#888888" font-size="11" text-anchor="middle">registers, program counter</text>
+  <text x="855" y="249" fill="#888888" font-size="11" text-anchor="middle">(duplicated per thread)</text>
+
+  <!-- connectors down into physical core -->
+  <g stroke="#e8961e" stroke-width="1.8" fill="none" marker-end="url(#htArrowAmber)">
+    <path d="M225,206 L225,300 L400,300"/>
+    <path d="M855,206 L855,300 L680,300"/>
+  </g>
+
+  <!-- physical core container -->
+  <rect x="130" y="300" width="820" height="270" rx="14" fill="#111111" stroke="#5a5a8a" stroke-width="1.6"/>
+  <text x="540" y="330" fill="#f0f0f0" font-size="16" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono',monospace">Physical Core</text>
+  <text x="540" y="348" fill="#888888" font-size="11" text-anchor="middle">everything below is shared between both logical CPUs</text>
+
+  <!-- front-end -->
+  <rect x="180" y="375" width="720" height="52" rx="8" fill="#141414" stroke="#3a3a5c" stroke-width="1.4"/>
+  <text x="540" y="407" fill="#f0f0f0" font-size="13.5" text-anchor="middle" font-family="'JetBrains Mono',monospace">Front-End: Fetch / Decode / Branch Predictor</text>
+
+  <g stroke="#888888" stroke-width="1.4" fill="none" marker-end="url(#htArrowMuted)">
+    <path d="M540,427 L540,448"/>
+  </g>
+
+  <!-- execution ports: the contention point -->
+  <rect x="180" y="450" width="720" height="66" rx="8" fill="#171207" stroke="#e8961e" stroke-width="2"/>
+  <text x="540" y="478" fill="#e8961e" font-size="13.5" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono',monospace">Execution Ports</text>
+  <text x="540" y="500" fill="#f0f0f0" font-size="12" text-anchor="middle">ALU · FPU · Vector / AVX · Load-Store</text>
+
+  <g stroke="#4c8a5e" stroke-width="1.4" fill="none" marker-end="url(#htArrowGreen)">
+    <path d="M540,516 L540,536"/>
+  </g>
+
+  <!-- shared cache -->
+  <rect x="180" y="538" width="720" height="42" rx="8" fill="#0f1a12" stroke="#2f5c3a" stroke-width="1.4"/>
+  <text x="540" y="564" fill="#f0f0f0" font-size="12.5" text-anchor="middle" font-family="'JetBrains Mono',monospace">L1 / L2 Cache (shared)</text>
+
+  <!-- outside: further shared resources -->
+  <g stroke="#4c8a5e" stroke-width="1.6" fill="none" marker-end="url(#htArrowGreen)">
+    <path d="M540,570 L540,608"/>
+  </g>
+  <rect x="330" y="608" width="420" height="40" rx="20" fill="#0f1a12" stroke="#2f5c3a" stroke-width="1.4"/>
+  <text x="540" y="633" fill="#888888" font-size="11.5" text-anchor="middle" font-family="'JetBrains Mono',monospace">L3 cache &amp; memory bandwidth — shared cluster-wide across cores</text>
+</svg>
