@@ -5,7 +5,7 @@ draft: false
 showToc: true
 ---
 
-I'm **Nagaraj Rajangam Selvaraj**, a Senior HPC & Cloud Infrastructure Engineer with 6+ years of experience designing and operating scientific computing platforms for global pharmaceutical and life sciences companies.
+I'm **Nagaraj Rajangam Selvaraj**, a Lead Solution Architect with 7+ years of experience designing and operating scientific computing platforms for global pharmaceutical and life sciences companies.
 
 My background is biomedical engineering, which means I've always worked at the intersection of biology and computation. Today that translates into building the infrastructure that lets scientists run drug simulations, protein folding predictions, and genomics pipelines at scale, without worrying about the compute.
 
@@ -13,7 +13,7 @@ My background is biomedical engineering, which means I've always worked at the i
 
 ## What I Do
 
-At **Zifo RnD Solutions** (2019 – present), I serve as lead architect and on-site technical representative for top pharma clients, responsible for the full stack of HPC and cloud infrastructure that supports mission-critical research.
+At **Zifo RnD Solutions** (2019 – 2026), I served as lead architect and on-site technical representative for top pharma clients, responsible for the full stack of HPC and cloud infrastructure that supports mission-critical research.
 
 The scale I work at:
 
@@ -61,9 +61,13 @@ If you work in life sciences computing, bioinformatics infrastructure, or cloud 
 
 <img src="https://img.shields.io/badge/CNCF-Kubernetes%20Administrator%20(CKA)-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Certified Kubernetes Administrator" />
 
-<img src="https://img.shields.io/badge/Microsoft-Azure%20Administrator-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="Microsoft Certified Azure Administrator" />
+<img src="https://img.shields.io/badge/CNCF-Kubernetes%20and%20Cloud%20Native%20Associate%20(KCNA)-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="KCNA: Kubernetes and Cloud Native Associate" />
 
-<img src="https://img.shields.io/badge/HashiCorp-Terraform%20Associate-7B42BC?style=for-the-badge&logo=terraform&logoColor=white" alt="HashiCorp Certified Terraform Associate" />
+<img src="https://img.shields.io/badge/CNCF-Kubernetes%20and%20Cloud%20Native%20Security%20Associate%20(KCSA)-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes and Cloud Native Security Associate" />
+
+<img src="https://img.shields.io/badge/Claude-Certified%20Architect%20Professional-DA7756?style=for-the-badge&logo=claude&logoColor=white" alt="Claude Certified Architect - Professional" />
+
+<img src="https://img.shields.io/badge/NVIDIA-Certified%20Professional%20AI%20Operations-76B900?style=for-the-badge&logo=nvidia&logoColor=white" alt="NVIDIA Certified Professional: AI Operations" />
 
 <img src="https://img.shields.io/badge/NVIDIA-InfiniBand%20Professional-76B900?style=for-the-badge&logo=nvidia&logoColor=white" alt="NVIDIA Certified InfiniBand Professional" />
 
